@@ -62,10 +62,9 @@ body {
     background: darkgray;
 }
 .rtx {
-    margin: 0 0 0 13%;
+    left: calc(100vw - 120px);
     width: 100px;
     height: 40px;
-    display: inline-block;
     background: rgb(49, 49, 49);
     border: 3px solid black;
     position: fixed;    
