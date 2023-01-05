@@ -10,179 +10,27 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Pinball Converter</title>
-
-        <script>
-            colors = [
-                {"color":"brown", "hex":"#a85807", "path":"images/brown-32x.png"},
-                {"color":"pink","hex":"#ec86f0", "path":"images/pink-32x.png"},
-                {"color":"red","hex":"#ed3472", "path":"images/red-32x.png"},
-                {"color":"orange","hex":"#f79225", "path":"images/orange-32x.png"},
-                {"color":"yellow","hex":"#f2d635", "path":"images/yellow-32x.png"},
-                {"color":"green","hex":"#5ee04a", "path":"images/green-32x.png"}];
-
-            let pinballs = 0;
-            function calculate() {
-                let money = document.getElementById("EuroInput").value;
-                pinballs = money*20;
-                if(money == '69') pinballs = 420;
-                if(money == '420') pinballs = 69;
-                draw();
-            }
-
-            let pinballdata = []
-            function draw(noInt) {
-                let randint
-                let pv = ""
-                
-                let dots = document.getElementsByClassName("dot");
-                let imgs = document.getElementsByClassName("img"); //TODO: Fill in class name
-                if(RTX == "off") {
-                    for(let i=0;i<pinballs;i++) {
-                        pv += '        <span class="dot"></span>'
-                    }
-                } else {
-                    for(let i=0;i<pinballs;i++) {
-                        pv += '        <img class="img">'
-                    }
-                }
-                document.getElementById("pv").innerHTML = pv;
-                document.getElementById("PinballP").innerHTML = pinballs;
-
-                for(let j=0;j<pinballs;j++) {
-                    if(noInt) {
-                        randint = pinballdata[j]
-                    } else {
-                        randint = Math.floor(Math.random()*6)
-                    }
-                    if(RTX == "off") {
-                        dots[j].style.background=`radial-gradient(circle at 100px 100px, ${colors[randint].hex} 85%, rgba(255, 255, 255, 0.6) 100%)`;
-                    } else {
-                        imgs[j].src=colors[randint].path;
-                        imgs[j].style.transform= `rotate(${Math.floor(Math.random()*356)}deg)`
-                    }
-                    pinballdata[j] = randint
-                    console.log("Pinballdata set to: " + pinballdata[j])
-                }
-            }
-
-            let RTX = "off"
-            function toggleRTX() {
-                let div = document.getElementsByClassName('rtx');
-                if(RTX == "off") {
-                    RTX = "on"
-                    div[0].style.background = '#76b900'
-                    div[0].style.color = 'black'
-                    div[0].innerHTML = 'RTX: ON';
-                    console.log("RTX: " + RTX);
-                } else {
-                    RTX = "off"
-                    div[0].style.background = 'rgb(49, 49, 49)'
-                    div[0].style.color = 'white'
-                    div[0].innerHTML = 'RTX: OFF'
-                    console.log("RTX: " + RTX);
-                }
-                draw(true);
-            }
-        </script>
-        <style>
-            *{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; }
-            .a{
-                display:block;
-                margin: 0 0 10px 0;
-                padding-bottom: 10px;
-                width: auto;
-                text-align: center;
-                background-color: lightslategray;
-            }
-            input{
-                padding:0;
-                border-style:solid;
-                border-radius: 5px;
-                width: 20%;
-                border-color: darkslategray;    
-                background-color: darkslategray;
-                color:white;
-                font-size: 15px;
-            }
-            .EuroDiv{
-                display:inline-block;
-                text-align: center;
-                align-self: auto;
-                margin: auto;
-                width: 30%;
-                color: white;
-                font-size: 20px;
-            }
-            .PinballDiv{
-                display:inline-block;
-                text-align: center;
-                align-self: auto;
-                margin: auto;
-                width: 30%;
-                color: white;
-                font-size: 20px;
-            }
-            .dot{
-                height: 25px;
-                width: 25px;
-                border-radius: 50%;
-                display: inline-block;
-            }
-            img{
-                height: 25px;
-                width: 25px;
-                border-style:none;
-            }
-            p {
-                text-align: center;
-                font-weight: bold;
-                font-size: 250%;
-                margin: 0;
-                padding: 20px;
-                color: white;
-                background: lightslategray;
-            }
-            body {
-                margin: 0;
-                background: darkgray;
-            }
-            .rtx {
-                margin: 0 0 0 13%;
-                width: 100px;
-                height: 40px;
-                display: inline-block;
-                background: rgb(49, 49, 49);
-                border: 3px solid black;
-                position: fixed;    
-                transform: skewX(-10deg);
-                text-align: center;
-                font-family:Arial, Helvetica, sans-serif;
-                font-weight: bold;
-                align-self: right;
-                color: white;
-            }
-            .rtx:hover {
-                cursor:pointer;
-            }
-        </style>
+        <link rel="stylesheet" href="./style.css">
+        <script src="./script.js"></script>
     </head>
     <body>
         <p>Pinball Converter</p>
         <div class="a">
             <div class="EuroDiv">
                 <p2 class="EuroDiv">Euros:</p2>
-                <div><input id="EuroInput" type="number" value="0" onkeyup="calculate()"></div>
+                <div>
+                    <input id="EuroInput" type="number" value="0" onkeyup="calculate()">
+                </div>
             </div>
             <div class="PinballDiv">
                 <p2>Pinballs:</p2>
-                <div><p3 id="PinballP">0</p3></div>
+                <div>
+                    <p3 id="PinballP">0</p3>
+                </div>
             </div>
             <button type="button" onclick="toggleRTX()" class="rtx">RTX: OFF</button>
         </div>
-
-        <div id="pv" style="text-align:center">
-            <span class="dot"></span>
-            <span class="dot"></span>
+        <div id="pv">
             <span class="dot"></span>
         </div>
     </body>
